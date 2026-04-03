@@ -94,6 +94,53 @@ section h2 {
   margin-bottom: 10px;
 }
 
+/* Contact Form */
+#contactForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+#contactForm input, #contactForm textarea {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#contactForm button {
+  background: #004aad;
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+#contactForm button:hover {
+  background: #0066cc;
+}
+
+/* Social Media Icons */
+.social-icons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-icons a {
+  color: #004aad;
+  font-size: 1.8em;
+  margin: 0 10px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #ffcc00;
+}
+
 /* Footer */
 footer {
   background: #006400;

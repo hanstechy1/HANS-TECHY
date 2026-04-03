@@ -1,4 +1,4 @@
-# Hans Techy Company Ltd 🌍
+## Hans Techy Company Ltd 🌍
 
 **Ubunifu wa Teknolojia kwa Maendeleo ya Afrika**
 
@@ -17,9 +17,10 @@ Hans Techy Company Ltd ni kampuni ya teknolojia na huduma za AI yenye makao Tanz
 ---
 
 ## 📞 Wasiliana Nasi
-- Simu: +255 674 688 818 / +255 686 005 775  
-- Email: info@hanstechy.co.tz  
-- Tovuti: [www.hanstechy.co.tz](http://www.hanstechy.co.tz)
+- Simu: +255 674 688 818 
+        +255 686 005 775  
+- Email: hanstechy@outlook.com 
+- Tovuti: [www.hanstechy.co.tz](https://hanstechy1.github.io/HANS-TECHY/)
 
 ---
 

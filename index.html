@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HANS TECHY V2 — WhatsApp Bot & Session Portal</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #060913;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border: rgba(0, 255, 136, 0.25);
+      --primary: #00ff88;
+      --secondary: #00d2ff;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(0, 210, 255, 0.08) 0%, transparent 50%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.5;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #050811;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* Input & Button */
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    input[type="tel"] {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    input[type="tel"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #050811;
+      box-shadow: 0 4px 20px rgba(0, 255, 136, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-heroku {
+      background: #79589f;
+      color: #ffffff;
+      box-shadow: 0 4px 20px rgba(121, 88, 159, 0.35);
+    }
+
+    .btn-heroku:hover {
+      background: #8b66b5;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(121, 88, 159, 0.5);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Result Box */
+    .result-box {
+      margin-top: 18px;
+      padding: 18px;
+      background: rgba(0, 255, 136, 0.05);
+      border: 1px dashed var(--primary);
+      border-radius: 16px;
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pair-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 3px;
+      margin: 8px 0;
+      display: block;
+    }
+
+    .helper-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Grid for Socials */
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 480px) {
+      .social-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        HANS TECHY V2 • LIVE ENGINE
+      </div>
+      <h1>HANS TECHY V2</h1>
+      <p class="subtitle">Generate your WhatsApp pairing code, connect your account securely, and deploy your personal bot to Heroku in minutes.</p>
+    </header>
+
+    <!-- STEP 1: PAIR CODE -->
+    <section class="card">
+      <div class="card-title">
+        <span class="step-num">1</span>
+        Get WhatsApp Pair Code
+      </div>
+      <p class="helper-text">Enter your WhatsApp number including your country code (e.g. 255686005775) to request an instant linking code.</p>
+
+      <div class="input-box">
+        <label for="phone">Phone Number (with Country Code):</label>
+        <input type="tel" id="phone" placeholder="255686005775" />
+        <button id="get-code-btn" class="btn btn-primary" onclick="requestPairCode()">
+          ⚡ Generate Code
+        </button>
+      </div>
+
+      <!-- Result Container -->
+      <div id="result-box" class="result-box">
+        <p class="helper-text">Your WhatsApp Pairing Code:</p>
+        <span id="code-display" class="pair-code">----</span>
+        <button class="btn btn-outline" style="padding: 10px 14px; font-size: 13px; margin-top: 6px;" onclick="copyCode()">
+          📋 Copy Code
+        </button>
+        <p class="helper-text" style="margin-top: 10px;">
+          Open <b>WhatsApp ➡️ Linked Devices ➡️ Link with phone number</b> and paste this code!
+        </p>
+      </div>
+    </section>
+
+    <!-- STEP 2: DEPLOY BOT -->
+    <section class="card">
+      <div class="card-title">
+        <span class="step-num">2</span>
+        Deploy Bot to Heroku
+      </div>
+      <p class="helper-text" style="margin-bottom: 16px;">
+        Once connected, your <b>SESSION_ID</b> will be delivered straight to your WhatsApp DM. Copy it, then click the button below to deploy your 24/7 cloud bot.
+      </p>
+
+      <a href="https://dashboard.heroku.com/new?template=https://github.com/hanstechy1/hans-techy-v2" target="_blank" class="btn btn-heroku">
+        🚀 Deploy to Heroku
+      </a>
+    </section>
+
+    <!-- STEP 3: COMMUNITY & SUPPORT -->
+    <section class="card">
+      <div class="card-title">
+        <span class="step-num">3</span>
+        Official Support & Community
+      </div>
+      <p class="helper-text">Need help or want to talk to the creator? Connect directly below:</p>
+
+      <div class="social-grid">
+        <a href="https://wa.me/255686005775" target="_blank" class="btn btn-outline">
+          💬 Chat with Owner
+        </a>
+        <a href="https://github.com/hanstechy1/hans-techy-v2" target="_blank" class="btn btn-outline">
+          ⭐ Star on GitHub
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      Built with ❤️ by HANS TECHY • All Rights Reserved.
+    </footer>
+
+  </div>
+
+  <script>
+    // Server ya Heroku inayotoa Pair Code
+    const PAIRING_API = 'https://session-genereter-5c821fc67ec3.herokuapp.com/pair?number=';
+
+    async function requestPairCode() {
+      const phoneInput = document.getElementById('phone');
+      const btn = document.getElementById('get-code-btn');
+      const resultBox = document.getElementById('result-box');
+      const codeDisplay = document.getElementById('code-display');
+
+      const rawNumber = phoneInput.value.replace(/\D/g, '');
+
+      if (!rawNumber || rawNumber.length < 9) {
+        alert('Tafadhali ingiza namba kamili ya simu ikiwa na country code (mfano 255686005775).');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = '⏳ Inazalisha kodi...';
+      resultBox.style.display = 'none';
+
+      try {
+        const response = await fetch(PAIRING_API + rawNumber);
+        const data = await response.json();
+
+        if (data && data.code) {
+          codeDisplay.innerText = data.code;
+          resultBox.style.display = 'block';
+        } else {
+          alert('Hitilafu: ' + (data.error || 'Haikuweza kupata kodi. Tafadhali jaribu tena baada ya sekunde chache.'));
+        }
+      } catch (err) {
+        alert('Kuna hitilafu ya mtandao au server inazinduka. Tafadhali jaribu tena.');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '⚡ Generate Code';
+      }
+    }
+
+    function copyCode() {
+      const code = document.getElementById('code-display').innerText;
+      if (code && code !== '----') {
+        navigator.clipboard.writeText(code);
+        alert('Kodi imenakiliwa (Copied): ' + code);
+      }
+    }
+  </script>
+
+</body>
+</html>
